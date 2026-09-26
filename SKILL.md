@@ -54,6 +54,18 @@ expand on implementation details.
 | `references/tokens.md` | CSS custom properties, Tailwind preset, token mapping |
 | `references/modes.md` | Full Funk vs Flow comparison with decision guidance |
 
+### Installation for AI Tools
+
+Install Funky Design as a global or workspace skill across AI coding assistants:
+
+| Tool | Global Path | Install Command |
+|---|---|---|
+| **Google Antigravity CLI (`agy`)** | `~/.gemini/config/skills/funky-design` | `git clone https://github.com/GoBanana-io/funky-design.git ~/.gemini/config/skills/funky-design` |
+| **Muse** | `~/.config/muse/skills/funky-design` | `git clone https://github.com/GoBanana-io/funky-design.git ~/.config/muse/skills/funky-design` |
+| **Claude Code** | `~/.claude/skills/funky-design` | `git clone https://github.com/GoBanana-io/funky-design.git ~/.claude/skills/funky-design` |
+
+For project-level installation, place into `.gemini/skills/funky-design`, `.muse/skills/funky-design`, or `.claude/skills/funky-design`. See `README.md` for full instructions.
+
 ---
 
 ## § 1 — Philosophy: The 7 Pillars
