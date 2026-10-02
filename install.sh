@@ -32,7 +32,7 @@ Usage: install.sh [--skill NAME|all] [--tools LIST|--all-tools] [--list] [--upda
   --all-tools    all tools: claude,muse,gemini,gemini-cli,codex,cursor,opencode,copilot,windsurf
   --list         list available skills and exit
   --update       git pull this repo and exit
-  --force        replace existing non-symlink installs (requires --skill/--tools scope)
+  --force        replace existing non-symlink installs (default scope: everything)
   -h, --help     this help
 
 Tool targets (symlinked):
@@ -75,13 +75,12 @@ link_skill() {
 SKILL="all"
 TOOLS="$ALL_TOOLS"
 FORCE="0"
-SCOPED="0"
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    --skill) SKILL="${2:?--skill needs a value}"; SCOPED="1"; shift 2 ;;
-    --tools) TOOLS="${2:?--tools needs a value}"; SCOPED="1"; shift 2 ;;
-    --all-tools) TOOLS="$ALL_TOOLS"; SCOPED="1"; shift ;;
+    --skill) SKILL="${2:?--skill needs a value}"; shift 2 ;;
+    --tools) TOOLS="${2:?--tools needs a value}"; shift 2 ;;
+    --all-tools) TOOLS="$ALL_TOOLS"; shift ;;
     --list) list_skills; exit 0 ;;
     --update) git -C "$REPO_ROOT" pull --ff-only; exit 0 ;;
     --force) FORCE="1"; shift ;;
@@ -89,12 +88,6 @@ while [ $# -gt 0 ]; do
     *) echo "Unknown flag: $1" >&2; usage >&2; exit 1 ;;
   esac
 done
-
-if [ "$FORCE" = "1" ] && [ "$SCOPED" = "0" ]; then
-  echo "Refusing: --force needs an explicit scope (it never applies to everything by default)." >&2
-  echo "Example: ./install.sh --tools gemini --force" >&2
-  exit 1
-fi
 
 SKILLS=()
 if [ "$SKILL" = "all" ]; then
