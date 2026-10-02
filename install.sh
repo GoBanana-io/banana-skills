@@ -13,18 +13,37 @@ SKILLS_DIR="$REPO_ROOT/skills"
 
 CLAUDE_DIR="$HOME/.claude/skills"
 MUSE_DIR="$HOME/.config/muse/skills"
-GEMINI_DIR="$HOME/.gemini/config/skills"
+GEMINI_DIR="$HOME/.gemini/config/skills"           # Antigravity
+GEMINI_CLI_DIR="$HOME/.gemini/skills"              # Gemini CLI (distinct from Antigravity)
+CODEX_DIR="${CODEX_HOME:-$HOME/.codex}/skills"
+CURSOR_DIR="$HOME/.cursor/skills"
+OPENCODE_DIR="${OPENCODE_HOME:-${XDG_CONFIG_HOME:-$HOME/.config}/opencode}/skills"
+COPILOT_DIR="$HOME/.copilot/skills"
+WINDSURF_DIR="$HOME/.codeium/windsurf/skills"
+
+ALL_TOOLS="claude,muse,gemini,gemini-cli,codex,cursor,opencode,copilot,windsurf"
 
 usage() {
   cat <<'EOF'
 Usage: install.sh [--skill NAME|all] [--tools LIST|--all-tools] [--list] [--update] [-h]
 
   --skill NAME   install one skill (default: all)
-  --tools LIST   comma-separated: claude,muse,gemini (default: all three)
-  --all-tools    shorthand for all three tools
+  --tools LIST   comma-separated tool names (default: --all-tools)
+  --all-tools    all tools: claude,muse,gemini,gemini-cli,codex,cursor,opencode,copilot,windsurf
   --list         list available skills and exit
   --update       git pull this repo and exit
   -h, --help     this help
+
+Tool targets (symlinked):
+  claude      ~/.claude/skills/<name>                 Claude Code
+  muse        ~/.config/muse/skills/<name>             Muse
+  gemini      ~/.gemini/config/skills/<name>          Antigravity
+  gemini-cli  ~/.gemini/skills/<name>                 Gemini CLI
+  codex       ${CODEX_HOME:-~/.codex}/skills/<name>    Codex CLI
+  cursor      ~/.cursor/skills/<name>                 Cursor
+  opencode    <config>/opencode/skills/<name>         OpenCode ($OPENCODE_HOME or $XDG_CONFIG_HOME)
+  copilot     ~/.copilot/skills/<name>                Copilot CLI
+  windsurf    ~/.codeium/windsurf/skills/<name>       Windsurf Cascade
 EOF
 }
 
@@ -47,24 +66,14 @@ link_skill() {
   echo "OK   $tool/$skill -> $dest"
 }
 
-cursor_snippet() {
-  local skill="$1"
-  echo "--- Cursor: save as .cursor/rules/$skill.mdc in your project ---"
-  echo '---'
-  echo "description: Apply the $skill skill"
-  echo 'globs: **/*'
-  echo '---'
-  echo "Load and follow the skill at $SKILLS_DIR/$skill/SKILL.md."
-}
-
 SKILL="all"
-TOOLS="claude,muse,gemini"
+TOOLS="$ALL_TOOLS"
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --skill) SKILL="${2:?--skill needs a value}"; shift 2 ;;
     --tools) TOOLS="${2:?--tools needs a value}"; shift 2 ;;
-    --all-tools) TOOLS="claude,muse,gemini"; shift ;;
+    --all-tools) TOOLS="$ALL_TOOLS"; shift ;;
     --list) list_skills; exit 0 ;;
     --update) git -C "$REPO_ROOT" pull --ff-only; exit 0 ;;
     -h|--help) usage; exit 0 ;;
@@ -95,8 +104,13 @@ for skill in "${SKILLS[@]}"; do
       claude) link_skill "$skill" "$CLAUDE_DIR" "claude" ;;
       muse) link_skill "$skill" "$MUSE_DIR" "muse" ;;
       gemini) link_skill "$skill" "$GEMINI_DIR" "gemini" ;;
-      cursor) cursor_snippet "$skill" ;;
-      *) echo "Unknown tool: $tool (use claude,muse,gemini,cursor)" >&2; exit 1 ;;
+      gemini-cli) link_skill "$skill" "$GEMINI_CLI_DIR" "gemini-cli" ;;
+      codex) link_skill "$skill" "$CODEX_DIR" "codex" ;;
+      cursor) link_skill "$skill" "$CURSOR_DIR" "cursor" ;;
+      opencode) link_skill "$skill" "$OPENCODE_DIR" "opencode" ;;
+      copilot) link_skill "$skill" "$COPILOT_DIR" "copilot" ;;
+      windsurf) link_skill "$skill" "$WINDSURF_DIR" "windsurf" ;;
+      *) echo "Unknown tool: $tool (use $ALL_TOOLS)" >&2; exit 1 ;;
     esac
   done
 done

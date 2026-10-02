@@ -22,14 +22,19 @@ Selective install:
 ./install.sh --list                                            # list skills
 ```
 
-What it does per tool:
+What it does per tool (all symlinks, all auto-update on `git pull`):
 
-| Tool | Target | Method |
-|---|---|---|
-| Claude Code | `~/.claude/skills/<name>` | symlink |
-| Muse | `~/.config/muse/skills/<name>` | symlink |
-| Antigravity / Gemini CLI | `~/.gemini/config/skills/<name>` | symlink |
-| Cursor | `.cursor/rules/<name>.mdc` (per project) | prints a rule snippet pointing at the skill — see `skills/<name>/SKILL.md` |
+| Tool | Target |
+|---|---|
+| Claude Code | `~/.claude/skills/<name>` |
+| Muse | `~/.config/muse/skills/<name>` |
+| Antigravity | `~/.gemini/config/skills/<name>` |
+| Gemini CLI | `~/.gemini/skills/<name>` |
+| Codex CLI | `${CODEX_HOME:-~/.codex}/skills/<name>` |
+| Cursor | `~/.cursor/skills/<name>` |
+| OpenCode | `${OPENCODE_HOME:-${XDG_CONFIG_HOME:-~/.config}/opencode}/skills/<name>` |
+| Copilot CLI | `~/.copilot/skills/<name>` |
+| Windsurf Cascade | `~/.codeium/windsurf/skills/<name>` |
 
 ## Update
 
@@ -45,7 +50,8 @@ Copy (not symlink) one skill into your project repo:
 
 ```bash
 mkdir -p .claude/skills && cp -r ~/banana-skills/skills/funky-design .claude/skills/
-# equivalents: .muse/skills/ , .gemini/skills/
+# equivalents: .muse/skills/ , .gemini/skills/ , .codex/skills/ ,
+# .cursor/skills/ , .opencode/skills/ , .github/skills/ , .agents/skills/
 ```
 
 ## Add a new skill

@@ -65,9 +65,15 @@ cd ~/banana-skills && ./install.sh --skill funky-design --all-tools
 
 | Tool | Global Path |
 |---|---|
-| **Google Antigravity CLI (`agy`)** | `~/.gemini/config/skills/funky-design` |
-| **Muse** | `~/.config/muse/skills/funky-design` |
 | **Claude Code** | `~/.claude/skills/funky-design` |
+| **Muse** | `~/.config/muse/skills/funky-design` |
+| **Google Antigravity CLI (`agy`)** | `~/.gemini/config/skills/funky-design` |
+| **Gemini CLI** | `~/.gemini/skills/funky-design` |
+| **Codex CLI** | `~/.codex/skills/funky-design` |
+| **Cursor** | `~/.cursor/skills/funky-design` |
+| **OpenCode** | `~/.config/opencode/skills/funky-design` |
+| **Copilot CLI** | `~/.copilot/skills/funky-design` |
+| **Windsurf Cascade** | `~/.codeium/windsurf/skills/funky-design` |
 
 For project-level installation, copy `skills/funky-design/` into `.gemini/skills/funky-design`, `.muse/skills/funky-design`, or `.claude/skills/funky-design`. See the repo-root `README.md` for full instructions.
 
