@@ -7,6 +7,7 @@ A collection of [Agent Skills](https://agentskills.io/specification) — one fol
 | Skill | What it does | Path |
 |---|---|---|
 | `funky-design` | Vibrant, expressive design language for web apps and marketing sites (Funk 🎸 / Flow 🌊 modes). Use when designing, building, reviewing, or theming any web product. | `skills/funky-design/` |
+| `fluent-flat` | Flat, opaque web-app theme inspired by Fluent (not affiliated with Microsoft) for dense dashboards and admin/B2B apps. Use for calm, contrasty, high-density UI. | `skills/fluent-flat/` |
 
 ## Install
 
